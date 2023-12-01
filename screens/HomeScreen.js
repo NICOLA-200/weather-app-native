@@ -66,3 +66,48 @@ export default function HomeScreen() {
  
    const {location, current} = weather;
  
+   return (
+     <View className="flex-1 relative">
+       
+       <Image 
+         blurRadius={70} 
+         source={require('../assets/images/bg.png')} 
+         className="absolute w-full h-full" />
+         {
+           loading? (
+             <View className="flex-1 flex-row justify-center items-center">
+               <Progress.CircleSnail thickness={10} size={140} color="#0bb3b2" />
+             </View>
+           ):(
+             <SafeAreaView className="flex flex-1">
+               {/* search section */}
+               <View style={{height: '7%'}} className="mx-4 relative z-50">
+                 <View 
+                   className="flex-row justify-end items-center rounded-full" 
+                   style={{backgroundColor: showSearch? theme.bgWhite(0.2): 'transparent'}}>
+                   
+                     {
+                       showSearch? (
+                         <TextInput 
+                           onChangeText={handleTextDebounce} 
+                           placeholder="Search city" 
+                           placeholderTextColor={'lightgray'} 
+                           className="pl-6 h-10 pb-1 flex-1 text-base text-white" 
+                         />
+                       ):null
+                     }
+                     <TouchableOpacity 
+                       onPress={()=> toggleSearch(!showSearch)} 
+                       className="rounded-full p-3 m-1" 
+                       style={{backgroundColor: theme.bgWhite(0.3)}}>
+                       {
+                         showSearch? (
+                           <XMarkIcon size="25" color="white" />
+                         ):(
+                           <MagnifyingGlassIcon size="25" color="white" />
+                         )
+                       }
+                       
+                   </TouchableOpacity>
+                 </View>
+                 {
