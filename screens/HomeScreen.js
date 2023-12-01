@@ -16,3 +16,27 @@ export default function HomeScreen() {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [weather, setWeather] = useState({})
+
+  
+  const handleSearch = search=>{
+     // console.log('value: ',search);
+     if(search && search.length>2)
+       fetchLocations({cityName: search}).then(data=>{
+         // console.log('got locations: ',data);
+         setLocations(data);
+       })
+   }
+ 
+   const handleLocation = loc=>{
+     setLoading(true);
+     toggleSearch(false);
+     setLocations([]);
+     fetchWeatherForecast({
+       cityName: loc.name,
+       days: '7'
+     }).then(data=>{
+       setLoading(false);
+       setWeather(data);
+       storeData('city',loc.name);
+     })
+   }
