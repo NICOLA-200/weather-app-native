@@ -40,3 +40,29 @@ export default function HomeScreen() {
        storeData('city',loc.name);
      })
    }
+
+   useEffect(()=>{
+     fetchMyWeatherData();
+   },[]);
+ 
+   const fetchMyWeatherData = async ()=>{
+     let myCity = await getData('city');
+     let cityName = 'Kigali';
+     if(myCity){
+       cityName = myCity;
+     }
+     fetchWeatherForecast({
+       cityName,
+       days: '7'
+     }).then(data=>{
+       // console.log('got data: ',data.forecast.forecastday);
+       setWeather(data);
+       setLoading(false);
+     })
+     
+   }
+ 
+   const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
+ 
+   const {location, current} = weather;
+ 
